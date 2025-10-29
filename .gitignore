@@ -1,0 +1,29 @@
+# Node / Angular
+node_modules/
+dist/
+npm-debug.log*
+
+# PHP / Laravel
+/vendor
+/storage/*.key
+/storage/logs
+/bootstrap/cache/
+.env
+.env.*
+composer.lock
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker / Temp
+docker-data/
+*.pid
+*.seed
+*.bak
