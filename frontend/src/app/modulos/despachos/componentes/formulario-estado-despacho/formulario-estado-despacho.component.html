@@ -1,0 +1,13 @@
+<form class="formulario-estado" [formGroup]="formulario" (ngSubmit)="enviar()">
+  <label for="estado">Actualizar estado</label>
+  <select id="estado" formControlName="estado">
+    <option [ngValue]="null">Selecciona un estado</option>
+    <option *ngFor="let estado of estadosDisponibles" [ngValue]="estado">
+      {{ estado }}
+    </option>
+  </select>
+  <div class="formulario-estado__error" *ngIf="formulario.get('estado')?.invalid && formulario.get('estado')?.touched">
+    Debes seleccionar un estado válido.
+  </div>
+  <button type="submit">Guardar estado</button>
+</form>

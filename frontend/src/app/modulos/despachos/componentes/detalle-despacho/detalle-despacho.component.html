@@ -39,6 +39,23 @@
           <p class="detalle__mensaje">{{ datos.mensaje_novedades }}</p>
         </ng-template>
       </section>
+
+      <section class="detalle__historial">
+        <h3>Historial de estados</h3>
+        <ng-container *ngIf="datos.historial_estados.length; else sinHistorial">
+          <ul>
+            <li *ngFor="let historial of datos.historial_estados">
+              <span class="detalle__historial-fecha">{{ historial.cambiado_en | date : 'short' }}</span>
+              <span class="detalle__historial-estado">
+                {{ historial.estado_anterior }} → {{ historial.estado_nuevo }}
+              </span>
+            </li>
+          </ul>
+        </ng-container>
+        <ng-template #sinHistorial>
+          <p class="detalle__mensaje">El despacho no registra cambios de estado.</p>
+        </ng-template>
+      </section>
     </ng-container>
   </ng-template>
 

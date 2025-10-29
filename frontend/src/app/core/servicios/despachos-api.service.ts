@@ -21,5 +21,11 @@ export class DespachosApiService {
   registrarNovedad(solicitud: RegistrarNovedadSolicitud): Observable<Novedad> {
     return this.http.post<Novedad>(`${this.baseUrl}/novedades`, solicitud);
   }
+
+  actualizarEstado(idDespacho: number, estado: string): Observable<DespachoDetalle> {
+    return this.http.put<DespachoDetalle>(`${this.baseUrl}/despachos/${idDespacho}/estado`, {
+      estado,
+    });
+  }
 }
 

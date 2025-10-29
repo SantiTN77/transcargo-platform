@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
@@ -24,6 +25,7 @@ describe('PaginaDespachoComponent', () => {
             observarError: () => error$.asObservable(),
             cargarDespacho: jasmine.createSpy('cargarDespacho'),
             registrarNovedad: jasmine.createSpy('registrarNovedad'),
+            actualizarEstado: jasmine.createSpy('actualizarEstado'),
           },
         },
         {
@@ -33,6 +35,7 @@ describe('PaginaDespachoComponent', () => {
           },
         },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaginaDespachoComponent);

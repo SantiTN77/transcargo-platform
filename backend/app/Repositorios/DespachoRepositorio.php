@@ -11,7 +11,7 @@ class DespachoRepositorio
 {
     public function buscarPorId(int $idDespacho): ?Despacho
     {
-        return Despacho::with('novedades')->find($idDespacho);
+        return Despacho::with(['novedades', 'historialEstados'])->find($idDespacho);
     }
 
     /**
@@ -20,9 +20,17 @@ class DespachoRepositorio
     public function listarTodos(): Collection
     {
         return Despacho::query()
-            ->with('novedades')
+            ->with(['novedades', 'historialEstados'])
             ->orderByDesc('fecha')
             ->get();
+    }
+
+    public function actualizarEstado(Despacho $despacho, string $nuevoEstado): Despacho
+    {
+        $despacho->estado = $nuevoEstado;
+        $despacho->save();
+
+        return $despacho;
     }
 }
 

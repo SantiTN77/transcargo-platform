@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Enums\TipoNovedadEnum;
+use App\Events\NovedadCriticaRegistrada;
 use App\Models\Despacho;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
@@ -60,6 +62,27 @@ class RegistrarNovedadTest extends TestCase
 
         $respuesta->assertUnprocessable()
             ->assertJsonValidationErrors(['tipo']);
+    }
+
+    public function test_dispara_evento_al_registrar_novedad_critica(): void
+    {
+        Event::fake([NovedadCriticaRegistrada::class]);
+
+        $despacho = Despacho::query()->create([
+            'conductor' => 'Laura Páez',
+            'vehiculo' => 'CAM852',
+            'estado' => 'En ruta',
+            'fecha' => Carbon::parse('2025-11-06'),
+        ]);
+
+        $this->postJson('/api/novedades', [
+            'id_despacho' => $despacho->id,
+            'tipo' => TipoNovedadEnum::Dano->value,
+            'descripcion' => 'Daño en la carga',
+            'fecha' => '2025-11-06 14:30:00',
+        ])->assertCreated();
+
+        Event::assertDispatched(NovedadCriticaRegistrada::class);
     }
 }
 

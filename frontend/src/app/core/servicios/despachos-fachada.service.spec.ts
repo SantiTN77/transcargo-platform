@@ -8,7 +8,7 @@ describe('DespachosFachadaService', () => {
   let api: jasmine.SpyObj<DespachosApiService>;
 
   beforeEach(() => {
-    api = jasmine.createSpyObj<DespachosApiService>('DespachosApiService', ['obtenerDespacho', 'registrarNovedad']);
+    api = jasmine.createSpyObj<DespachosApiService>('DespachosApiService', ['obtenerDespacho', 'registrarNovedad', 'actualizarEstado']);
 
     TestBed.configureTestingModule({
       providers: [
@@ -21,7 +21,7 @@ describe('DespachosFachadaService', () => {
   });
 
   it('emite despacho cargado correctamente', (done) => {
-    api.obtenerDespacho.and.returnValue(of({ id: 1, conductor: '', vehiculo: '', estado: '', fecha: '', novedades: [], mensaje_novedades: null }));
+    api.obtenerDespacho.and.returnValue(of({ id: 1, conductor: '', vehiculo: '', estado: '', fecha: '', novedades: [], mensaje_novedades: null, historial_estados: [] }));
 
     servicio.observarDespacho().subscribe((valor) => {
       if (valor) {
@@ -44,6 +44,33 @@ describe('DespachosFachadaService', () => {
     });
 
     servicio.cargarDespacho(1);
+  });
+
+  it('actualiza el estado del despacho exitosamente', (done) => {
+    const detalleActualizado = { id: 2, conductor: '', vehiculo: '', estado: 'Entregado', fecha: '', novedades: [], mensaje_novedades: null, historial_estados: [] };
+    api.actualizarEstado.and.returnValue(of(detalleActualizado));
+
+    servicio.observarDespacho().subscribe((valor) => {
+      if (valor?.id === 2 && valor.estado === 'Entregado') {
+        expect(api.actualizarEstado).toHaveBeenCalledWith(2, 'Entregado');
+        done();
+      }
+    });
+
+    servicio.actualizarEstado(2, 'Entregado');
+  });
+
+  it('notifica error cuando falla la actualización de estado', (done) => {
+    api.actualizarEstado.and.returnValue(throwError(() => new Error('Fallo')));
+
+    servicio.observarError().subscribe((mensaje) => {
+      if (mensaje) {
+        expect(mensaje).toContain('No fue posible actualizar el estado');
+        done();
+      }
+    });
+
+    servicio.actualizarEstado(3, 'Entregado');
   });
 });
 
