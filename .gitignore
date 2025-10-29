@@ -10,6 +10,7 @@ npm-debug.log*
 /bootstrap/cache/
 .env
 .env.*
+!backend/.env.example
 composer.lock
 
 # IDE

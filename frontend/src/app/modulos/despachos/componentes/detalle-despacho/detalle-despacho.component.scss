@@ -44,10 +44,30 @@
     gap: 0.75rem;
   }
 
+  &__historial ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid #1890ff;
+    padding-left: 1rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+
   &__novedad-fecha {
     font-size: 0.85rem;
     color: #8c8c8c;
     margin-right: 0.5rem;
+  }
+
+  &__historial-fecha {
+    font-size: 0.85rem;
+    color: #8c8c8c;
+    margin-right: 0.5rem;
+  }
+
+  &__historial-estado {
+    font-weight: 600;
   }
 
   &__novedad-tipo {

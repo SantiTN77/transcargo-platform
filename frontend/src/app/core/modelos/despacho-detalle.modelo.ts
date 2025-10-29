@@ -1,3 +1,4 @@
+import { HistorialEstado } from './historial-estado.modelo';
 import { Novedad } from './novedad.modelo';
 
 export interface DespachoDetalle {
@@ -8,5 +9,6 @@ export interface DespachoDetalle {
   fecha: string;
   novedades: Novedad[];
   mensaje_novedades: string | null;
+  historial_estados: HistorialEstado[];
 }
 

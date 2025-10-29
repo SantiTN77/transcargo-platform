@@ -11,4 +11,11 @@
     [estaCargando]="(cargando$ | async) ?? false"
     (registrar)="manejarRegistroNovedad($event)"
   ></app-formulario-novedad>
+
+  <app-formulario-estado-despacho
+    [estadoActual]="(despacho$ | async)?.estado ?? null"
+    [estadosDisponibles]="estadosDespacho"
+    [estaCargando]="(cargando$ | async) ?? false"
+    (actualizar)="manejarActualizacionEstado($event)"
+  ></app-formulario-estado-despacho>
 </div>

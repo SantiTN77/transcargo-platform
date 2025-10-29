@@ -44,5 +44,14 @@ describe('DespachosApiService', () => {
     expect(solicitud.request.body).toEqual(payload);
     solicitud.flush({});
   });
+
+  it('actualiza el estado del despacho', () => {
+    service.actualizarEstado(7, 'Entregado').subscribe();
+
+    const solicitud = httpMock.expectOne(`${environment.apiUrl}/despachos/7/estado`);
+    expect(solicitud.request.method).toBe('PUT');
+    expect(solicitud.request.body).toEqual({ estado: 'Entregado' });
+    solicitud.flush({});
+  });
 });
 

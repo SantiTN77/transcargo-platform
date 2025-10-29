@@ -15,6 +15,7 @@ export class PaginaDespachoComponent implements OnInit, OnDestroy {
   readonly cargando$ = this.fachada.observarCargando();
   readonly error$ = this.fachada.observarError();
   readonly tiposNovedad = ['Retraso', 'Transbordo', 'Daño', 'Cancelación'];
+  readonly estadosDespacho = ['En ruta', 'Entregado', 'Retrasado', 'Cancelado'];
 
   private readonly destruir$ = new Subject<void>();
   private idDespachoActual: number | null = null;
@@ -48,6 +49,14 @@ export class PaginaDespachoComponent implements OnInit, OnDestroy {
       ...solicitud,
       id_despacho: this.idDespachoActual,
     });
+  }
+
+  manejarActualizacionEstado(estado: string): void {
+    if (this.idDespachoActual === null) {
+      return;
+    }
+
+    this.fachada.actualizarEstado(this.idDespachoActual, estado);
   }
 }
 

@@ -8,6 +8,8 @@ Aplicación Angular 18 que consume la API de despachos para registrar novedades 
 - `src/app/core/servicios/despachos-api.service.ts`: comunicación HTTP con la API.
 - `src/app/core/servicios/despachos-fachada.service.ts`: estado compartido, errores y orquestación.
 - `src/app/modulos/despachos`: módulo funcional con componentes y routing lazily loadable.
+- `src/app/modulos/despachos/componentes/detalle-despacho`: detalle con línea de tiempo de estados y novedades.
+- `src/app/modulos/despachos/componentes/formulario-estado-despacho`: formulario reactivo para actualizar el estado.
 - `src/environments/environment.ts`: URL base de la API.
 - `src/app/**/**/*.spec.ts`: pruebas unitarias de servicios y componentes.
 

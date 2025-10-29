@@ -63,4 +63,21 @@ export class DespachosFachadaService {
       },
     });
   }
+
+  actualizarEstado(idDespacho: number, estado: string): void {
+    this.cargando$.next(true);
+    this.error$.next(null);
+
+    this.api.actualizarEstado(idDespacho, estado).subscribe({
+      next: (detalle) => {
+        this.despacho$.next(detalle);
+        this.ultimoDespachoConsultado = detalle.id;
+        this.cargando$.next(false);
+      },
+      error: () => {
+        this.error$.next('No fue posible actualizar el estado del despacho.');
+        this.cargando$.next(false);
+      },
+    });
+  }
 }

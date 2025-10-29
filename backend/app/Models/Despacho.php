@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon $fecha
  *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, NovedadDespacho> $novedades
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, HistorialEstadoDespacho> $historialEstados
  */
 class Despacho extends Model
 {
@@ -40,6 +41,12 @@ class Despacho extends Model
     public function novedades(): HasMany
     {
         return $this->hasMany(NovedadDespacho::class, 'id_despacho');
+    }
+
+    public function historialEstados(): HasMany
+    {
+        return $this->hasMany(HistorialEstadoDespacho::class, 'id_despacho')
+            ->orderBy('cambiado_en');
     }
 }
 

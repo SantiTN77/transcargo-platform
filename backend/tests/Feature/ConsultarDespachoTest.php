@@ -6,6 +6,7 @@ namespace Tests\Feature;
 
 use App\Enums\TipoNovedadEnum;
 use App\Models\Despacho;
+use App\Models\HistorialEstadoDespacho;
 use App\Models\NovedadDespacho;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -31,6 +32,13 @@ class ConsultarDespachoTest extends TestCase
             'fecha' => Carbon::parse('2025-11-03 12:00:00'),
         ]);
 
+        HistorialEstadoDespacho::query()->create([
+            'id_despacho' => $despacho->id,
+            'estado_anterior' => 'En ruta',
+            'estado_nuevo' => 'Retrasado',
+            'cambiado_en' => Carbon::parse('2025-11-03 13:00:00'),
+        ]);
+
         $respuesta = $this->getJson("/api/despachos/{$despacho->id}");
 
         $respuesta->assertOk()
@@ -41,6 +49,10 @@ class ConsultarDespachoTest extends TestCase
             ])
             ->assertJsonFragment([
                 'tipo' => TipoNovedadEnum::Transbordo->value,
+            ])
+            ->assertJsonFragment([
+                'estado_anterior' => 'En ruta',
+                'estado_nuevo' => 'Retrasado',
             ]);
     }
 
@@ -58,7 +70,8 @@ class ConsultarDespachoTest extends TestCase
         $respuesta->assertOk()
             ->assertJsonFragment([
                 'mensaje_novedades' => 'No hay novedades registradas',
-            ]);
+            ])
+            ->assertJsonPath('historial_estados', []);
     }
 }
 

@@ -19,6 +19,7 @@ class DespachoResource extends JsonResource
     public function toArray($request): array
     {
         $novedades = NovedadResource::collection($this->whenLoaded('novedades'));
+        $historial = HistorialEstadoDespachoResource::collection($this->whenLoaded('historialEstados'));
 
         return [
             'id' => $this->id,
@@ -30,6 +31,7 @@ class DespachoResource extends JsonResource
             'mensaje_novedades' => $novedades->count() > 0
                 ? null
                 : 'No hay novedades registradas',
+            'historial_estados' => $historial,
         ];
     }
 }
