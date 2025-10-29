@@ -1,0 +1,14 @@
+<div class="pagina">
+  <app-detalle-despacho
+    [despacho]="despacho$ | async"
+    [estaCargando]="(cargando$ | async) ?? false"
+    [mensajeError]="error$ | async"
+  ></app-detalle-despacho>
+
+  <app-formulario-novedad
+    [idDespacho]="(despacho$ | async)?.id ?? null"
+    [tiposNovedad]="tiposNovedad"
+    [estaCargando]="(cargando$ | async) ?? false"
+    (registrar)="manejarRegistroNovedad($event)"
+  ></app-formulario-novedad>
+</div>

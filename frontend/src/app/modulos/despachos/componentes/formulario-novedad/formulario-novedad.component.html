@@ -1,0 +1,31 @@
+<form [formGroup]="formulario" (ngSubmit)="enviar()" class="formulario">
+  <div class="formulario__grupo">
+    <label for="tipo">Tipo de novedad</label>
+    <select id="tipo" formControlName="tipo">
+      <option value="" disabled>Selecciona una opción</option>
+      <option *ngFor="let tipo of tiposNovedad" [value]="tipo">{{ tipo }}</option>
+    </select>
+    <small *ngIf="formulario.get('tipo')?.invalid && formulario.get('tipo')?.touched">
+      Selecciona un tipo válido.
+    </small>
+  </div>
+
+  <div class="formulario__grupo">
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" formControlName="descripcion" rows="3"></textarea>
+    <small *ngIf="formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched">
+      Ingresa una descripción (máximo 500 caracteres).
+    </small>
+  </div>
+
+  <div class="formulario__grupo">
+    <label for="fecha">Fecha y hora</label>
+    <input id="fecha" type="datetime-local" formControlName="fecha" />
+    <small *ngIf="formulario.get('fecha')?.invalid && formulario.get('fecha')?.touched">
+      Indica la fecha de la novedad.
+    </small>
+  </div>
+
+  <button type="submit" [disabled]="estaCargando || formulario.invalid">Registrar novedad</button>
+</form>
+

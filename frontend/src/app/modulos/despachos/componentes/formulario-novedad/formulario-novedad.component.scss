@@ -1,0 +1,49 @@
+.formulario {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #fafafa;
+
+  &__grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  label {
+    font-weight: 600;
+    color: #595959;
+  }
+
+  select,
+  textarea,
+  input {
+    border: 1px solid #bfbfbf;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  small {
+    color: #d32029;
+  }
+
+  button {
+    justify-self: start;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #1890ff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: #91d5ff;
+      cursor: not-allowed;
+    }
+  }
+}
+

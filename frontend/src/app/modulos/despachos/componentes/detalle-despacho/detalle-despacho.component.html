@@ -1,0 +1,50 @@
+<section class="detalle">
+  <ng-container *ngIf="mensajeError as error; else contenido">
+    <p class="detalle__error">{{ error }}</p>
+  </ng-container>
+
+  <ng-template #contenido>
+    <ng-container *ngIf="despacho as datos; else sinSeleccion">
+      <header class="detalle__encabezado">
+        <h2>Despacho #{{ datos.id }}</h2>
+        <span class="detalle__estado">{{ datos.estado }}</span>
+      </header>
+      <dl class="detalle__informacion">
+        <div>
+          <dt>Conductor</dt>
+          <dd>{{ datos.conductor }}</dd>
+        </div>
+        <div>
+          <dt>Vehículo</dt>
+          <dd>{{ datos.vehiculo }}</dd>
+        </div>
+        <div>
+          <dt>Fecha</dt>
+          <dd>{{ datos.fecha | date }}</dd>
+        </div>
+      </dl>
+
+      <section class="detalle__novedades">
+        <h3>Novedades</h3>
+        <ng-container *ngIf="datos.novedades.length; else sinNovedades">
+          <ul>
+            <li *ngFor="let novedad of datos.novedades">
+              <span class="detalle__novedad-fecha">{{ novedad.fecha | date : 'short' }}</span>
+              <span class="detalle__novedad-tipo">{{ novedad.tipo }}</span>
+              <p class="detalle__novedad-descripcion">{{ novedad.descripcion }}</p>
+            </li>
+          </ul>
+        </ng-container>
+        <ng-template #sinNovedades>
+          <p class="detalle__mensaje">{{ datos.mensaje_novedades }}</p>
+        </ng-template>
+      </section>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #sinSeleccion>
+    <p class="detalle__mensaje" *ngIf="estaCargando">Cargando información del despacho...</p>
+    <p class="detalle__mensaje" *ngIf="!estaCargando">Selecciona un despacho para ver su detalle.</p>
+  </ng-template>
+</section>
+
